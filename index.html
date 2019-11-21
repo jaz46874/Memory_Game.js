@@ -12,9 +12,13 @@
 </head>
 
 <body>
+
+  <!-- Top of document contains Heading, refresh button and Difficulty selector buttons.
+    Table dimensions are pre-set based on difficulty level and will be passed to setDimensions function in JavaScript file.  -->
+
   <div class="Top" id="top">
       <div>
-          <button type="button" id="refresh" onclick="location.reload();">Restart</button>
+          <button type="button" id="restart" onclick="location.reload();">Restart</button>
         </div>
       <h1>Welcome to my Memory Game</h1>
       <p>Select your difficulty level to begin: </p>
@@ -24,14 +28,16 @@
               <button type="button" onclick="setDimensions(4,5);">Hard</button>
       </div>
             <div class="color-picker"> 
+              <!-- contains buttons to choose background color. -->
                 <p> Change Background Color: </p>
-                  <button id="changeColor" type="button" onclick="changeColor()">Dark Mode</button>
-                  <button id="changeColor1" type="button" onclick="changeColor1()">Light Mode</button>
+                  <button id="darkModeBtn" type="button" onclick="darkMode()">Dark Mode</button>
+                  <button id="lightModeBtn" type="button" onclick="lightMode()">Light Mode</button>
                 </div>
                 
     </div>
   
     <div class="Table" id="table">
+      <!-- empty table is set and will be populated once JavaScript is run. -->
           <table id="table1"> 
           </table>
           <br> 

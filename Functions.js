@@ -1,4 +1,6 @@
-lock = false;    
+/* Calls the array of cards used to populate memory game table. 
+Each card has front, back & id attributes. */
+
 function getArray() {
     return (arrayOfCards = [
     card1 = {
@@ -125,105 +127,94 @@ function getArray() {
 ] )
 }
 
+/* 
+Creates the table to hold cards in array (x & y are the axis of the table).
+*/
+
 function setDimensions(x, y) {
     
-    
-    // sets the table dimensions
-    // x & y are the dimensions of the table
-
+    // initiates table 
     var mytable = document.getElementsByTagName("table")[0];
-    mytable.innerHTML = ""
-    console.log(mytable);
+    mytable.innerHTML = "" 
     iterator = 1;
+    //for loop to iterate through dimensions based on user difficulty choice (easy, medium or hard)
     for (var i=0; i < x; i++) {
-        
-        
         var temp = mytable.insertRow(i);
         for(var j=0; j < y; j++) {
             c = temp.insertCell(j);
             c.innerHTML = iterator; 
             c.setAttribute("id", "cell" + iterator);
             iterator++;     
-    }
+        }
     
     }
-    //console.log(i*j);
+
     console.log("your cards have been set");
-    console.log(iterator);
-    runme(iterator,getArray());
-    showFace();
+    shuffleAndAssign(iterator,getArray()); 
+    showFace(); 
 }
+
+/* 
+Function to assign all cards to table.
+*/
 
 function assignCards(card, cellid) {
     var elem = document.createElement("img");
-    console.log(card + " " + cellid)
     elem.setAttribute("src", "photos/"+card.back);
     elem.setAttribute("fsrc", "photos/"+card.front);
     elem.setAttribute("id", "card"+card.id);
     elem.setAttribute("isup", "false");
-    //elem.setAttribute("isMatch", "false");
     var temp = document.getElementById(cellid);
     temp.innerHTML = "";
     temp.appendChild(elem);
-    //document.getElementById(cellid).appendChild(elem);
-   // mytable.appendChild(myTextNode);
-
 }
 
-function runme(iterator,arrayOfCards){
-    //console.log(arrayOfCards);
+/*
+Calls shuffle function and applies it to arrayOfCards
+& then calls assignCards function to insert cards into table. 
+*/
+function shuffleAndAssign(iterator,arrayOfCards){
     loc = iterator - 1;
     tot = 20-loc
     arrayOfCards.splice(loc, tot);
-    shuff = shuffleArray(arrayOfCards); 
-    console.log(shuff);
+    shuff = shuffleSomething(arrayOfCards); 
     for (b = 0; b < loc; b++) { 
         assignCards(shuff[b], "cell"+(b+1));
     }
 } 
 
-//function turnOver() {
-// 1 event listener for click, 
-//document.getElementById("cell").addEventListener('click', flipOver());
-//} 
-//function flipOver() {
-//    document.getElementById("cell").setAttribute("src", "photos/"+cell.front);
- ///   document.getElementById("cell").setAttribute("isup", "true");
-//}
-// 2 when clicked, change src id,
-// 3 set new attribute for the img
-
-//var arrayOfCards = ["card1", "card2", "card3", "card4", "card5", "card6", "card7", "card8", "card9", "card10", "card11", "card12", "card13", "card14", "card15", "card16", "card17", "card18", "card19", "card20"];
-
-
-function shuffleArray(a2s) {
+/*
+Shuffles an array.
+*/
+function shuffleSomething(myCards) {
     
-    var m = a2s.length, t, i;
-    console.log(m);
-    // While there remain elements to shuffle…
-    while (m) {
+    var objtoShuffle = myCards.length, g, s;
+    while (objtoShuffle) { //while there is still un-shuffled objects
   
-      // Pick a remaining element…
-      i = Math.floor(Math.random() * m--);
+      // Randomly pick something to shuffle
+      s = Math.floor(Math.random() * objtoShuffle--);
   
-      // And swap it with the current element.
-      t = a2s[m];
-      a2s[m] = a2s[i];
-      a2s[i] = t;
+      // Swap it with current object
+      g = myCards[objtoShuffle];
+      myCards[objtoShuffle] = myCards[s];
+      myCards[s] = g;
     }
-  
-    return a2s;
+    return myCards;
   }
 
+/*
+Calls the function to turn card over. 
+*/
 
-
-    
 function turnMe() {
-    //console.log(this);
-    //this.setAttribute("src", this.getAttribute("fsrc"));
     isClicked(this);
  
 }
+
+/* 
+Loops through cards so when card is clicked, card is turned over 
+*/
+
 function showFace(){
     len = document.getElementsByTagName("td").length;
     for (num = 1; num< len+1;num++){
@@ -235,6 +226,10 @@ clicked = "";
 id = "";
 currentScore = 0;
 
+/* 
+Gets "id" attribute from card & changes the card to show front face image when clicked.
+*/
+
 function isClicked(aCard) {
     winScore = ((iterator-1)/2);
     el = document.getElementById(aCard.getAttribute("id"));
@@ -243,53 +238,46 @@ function isClicked(aCard) {
         el.setAttribute("src", aCard.getAttribute("fsrc"));
         el.setAttribute("isup", "true");
         id = aCard.getAttribute("id");
-        console.log(id + "first card");
-        //console.log(clicked);
         return; 
     }     
-    console.log(aCard);
+
+/*
+If a first card has been clicked, when second card is turned over, "its a match" is printed to console 
+& current score of matched cards is incremented. 
+
+When all cards have been matched, game is complete and alert "You won" runs. 
+*/
     if (clicked != "" & aCard.getAttribute("isup") == "false") {
         aCard.setAttribute("isup", "true");
         if (aCard.getAttribute("fsrc")==clicked){
             el.setAttribute("src", aCard.getAttribute("fsrc"));
             el.setAttribute("isup", "true");
-            clicked = ""; // is set to nothing, because if card file path matches, can move onto check next crds
+            clicked = ""; // is set to nothing, because if card file path matches, can move onto check next crds.
             console.log("Its a match!");
-            //aCard.setAttribute("isMatch", "true");
-            currentScore++;
-            //el.setAttribute("isMatch", "true");
-            console.log(winScore);
-            console.log(currentScore);
+            currentScore++; // increments score of matched cards
             if (currentScore == winScore) {
-                setTimeout(() => {
+                setTimeout(() => { // delays the alert to allow last card to be turned over and shown to user.
                 alert("You won")}, 150)
            
             return;
-            //count = count + 1;
         }}
-        else{
-            //el.setAttribute("src", el.getAttribute("fsrc"));
-            //el.setAttribute("isup", "true");
-            console.log(id + "second");
+        else{ //if match is not detected after second card is turned, cards are unflipped to original position.
             el2 = document.getElementById(id);
             el.setAttribute("src", el.getAttribute("fsrc"));
             el.setAttribute("isup", "true");
             unflip(el, el2);
-            //time(7000);
-            //el.setAttribute("src", "photos/ilovecode_logo.jpg");
-            //el.setAttribute("isup", "false");
-            //el2.setAttribute("src", "photos/ilovecode_logo.jpg");
-            //el2.setAttribute("isup", "false");
+
             clicked = "";
             id = "";
-            //reset(); // flip cards back to original state (resetting to backsrcimg), set isup=false, continue 
         }
-        //return; 
     } 
 }
 
+/*
+flip cards back to original state (resetting to backsrcimg), set isup=false, continue.
+*/
+
 function unflip(el, el2){
-    lock = true;
     setTimeout(() => {
         el.setAttribute("src", "photos/ilovecode_logo.jpg");
         el.setAttribute("isup", "false");
@@ -298,42 +286,23 @@ function unflip(el, el2){
       }, 500);
     }
   
-function changeColor() {
+/*
+sets background to dark mode 
+*/
+
+function darkMode() {
     document.body.style.backgroundColor = "purple";
   }
 
-  function changeColor1() {
+/*
+sets background to light mode
+*/
+
+function lightMode() {
     document.body.style.backgroundColor = "hotpink";
   }
-  
 
 
 
- //   wincheck = document.getElementsByTagName("img");
- //   console.log(wincheck[0].getAttribute("isMatch"));
- //   for(var i = 0; i < wincheck.length-1; i++){
-//        if (wincheck[i].getAttribute("isMatch") == "true") {
- //           console.log(i);
- //           continue;
-  //      }
- //       else{
-  //          //console.log(wincheck.length);
-   //         return;
- //       }
- //   }
- //   alert("You win");
-
-//}
-    
-    //el.setAttribute("src", "photos/ilovecode_logo.jpg");
-    //el.setAttribute("isup", "false");
-    //el2.setAttribute("src", "photos/ilovecode_logo.jpg");
-    //el2.setAttribute("isup", "false");
 
 
-// first issue, it wasn't in a function, so it was being called in order but the table wasn
-//created yet, so there was nothing there, it was null value,
-// put it into a function and run it after the table was created to fix the issue
-
-
-//take out anything that prints apart from match and game 1, cards have been set. 

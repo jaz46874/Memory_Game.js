@@ -1,7 +1,15 @@
+/*
+sets css for body of HTML document, background and default fonts used
+*/
+
 body {
     background-color: hotpink;
     font-family: 'Montserrat Alternates', sans-serif, 'Segoe UI', Tahoma, Verdana, sans-serif;
 }
+
+/*
+sets properties of the top of the HTML document
+*/
 
 .Top {
     height: 28vh;
@@ -9,7 +17,11 @@ body {
     margin: auto;
 }
 
-#refresh {
+/*
+sets properties and top right hand placement of restart game button
+*/
+
+#restart {
         position: fixed;
         top: 3px;
         right: 1px;
@@ -17,14 +29,26 @@ body {
         border: 2px solid black;
 }
 
+/*
+set paragraphs and heading one alignment and placing
+*/
+
 p, h1 {
     text-align: center;
     margin: auto;
 }
 
+/*
+set table height in relation to webpage
+*/
+
 .table {
     height: 50vh;
 }
+
+/*
+set image border radius, padding and width
+*/
 
 img {
     
@@ -33,20 +57,31 @@ img {
     width: 105px;
 }
 
+/*
+centers table, table row & cell 
+*/
+
 table, td, tr {
     margin-left:auto; 
     margin-right:auto;
 }
+
+/*
+sets table data border 
+*/
 
 td {
     border: 2px solid black;
     border-radius: 6px; 
 }
 
+/*
+sets properties for all buttons on page 
+*/
+
 button {
     background-color: white;
     border: 2px solid black;
-    
     color: black;
     padding: 3px 7px;
     text-align: center;
@@ -55,19 +90,30 @@ button {
     font-size: 16px;
     font-family: 'Montserrat Alternates', sans-serif, 'Segoe UI', Tahoma, Verdana, sans-serif;
     margin: 0 auto;
-    
 }
 
-#changeColor:hover {
+/*
+adds shadow to button when cursor hovers over it 
+*/
+
+button:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    background-color: gray;
+}
+
+/*
+adds background color to button when cursor hovers over it 
+*/
+
+#darkModeBtn:hover { 
     background-color: purple;
 
 }
 
-button:hover {
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+#lightModeBtn:hover {
+    background-color: hotpink;
+
 }
 
-#changeColor1:hover {
-    background-color: hotpink;
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
-}
+
+
